@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Instalasi
 ### Prasyarat
 Pastikan Anda memiliki Python 3.8 atau lebih baru serta virtual environment yang diaktifkan.
@@ -31,6 +30,3 @@ Pastikan Anda memiliki Python 3.8 atau lebih baru serta virtual environment yang
 ## Akses Dashboard yang Sudah Dideploy
 Dashboard sudah dideploy dan dapat diakses melalui link berikut:
 [**Data Science Salaries Dashboard**](https://adit-ecommerce-public-dataset.streamlit.app/)
-=======
-# ecommerce_customer_analysis
->>>>>>> f9d0856f0e9ce82db0ab0db0335093c7ca8fe04d
