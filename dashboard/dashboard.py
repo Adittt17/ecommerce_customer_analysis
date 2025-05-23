@@ -6,8 +6,8 @@ import seaborn as sns
 import datetime
 
 
-top_customers = pd.read_csv("top_customers.csv")
-customers_df = pd.read_csv("customers_df.csv")
+top_customers = pd.read_csv("dashboard/top_customers.csv")
+customers_df = pd.read_csv("dashboard/customers_df.csv")
 
 st.title('Proyek Dicoding Analisis Data')
 
