@@ -1,3 +1,6 @@
+## Description
+Explore customer purchasing behavior and city-based insights with this interactive E-Commerce Customer Analysis Dashboard built using Python and Streamlit. This project provides data-driven visualizations that help you understand who the top customers are and where they come from.
+
 ## Installation
 ### Prasyarat
 Make sure you have Python 3.8 or later and a virtual environment enabled.
