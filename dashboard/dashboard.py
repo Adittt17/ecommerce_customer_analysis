@@ -1,56 +1,87 @@
 import streamlit as st 
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
-import datetime
 
 # Load data
 top_customers = pd.read_csv("dashboard/top_customers.csv")
 customers_df = pd.read_csv("dashboard/customers_df.csv")
 
-# Title and Introduction
-st.title('Dicoding Data Analysis Project')
+# Global setup
+st.set_page_config(page_title="Customer Dashboard", layout="wide")
+sns.set_style("whitegrid")
 
-st.write(
+# --- Header ---
+st.title("🛒 E-Commerce Customer Dashboard")
+st.markdown(
     """
-    Hello everyone 👋  
-    My name is Adityo Pangestu.  
-    This is my first project in data analysis.
+    Welcome to my first data analysis project, built with using Streamlit.  
+    This dashboard highlights key insights from customer transaction data.
     """
 )
 
-# Top Customers by Order Count
-st.header('Top Customers by Order Count')
+# --- Top Customers Section ---
+st.markdown("### Top Customers by Number of Orders")
 
-fig, ax = plt.subplots(figsize=(12, 6))
-sns.barplot(x='order_count', y='customer_unique_id', data=top_customers, palette='viridis', ax=ax)
-ax.set_title('Top Customers by Order Count', fontsize=16)
-ax.set_xlabel('Number of Orders', fontsize=12)
-ax.set_ylabel('Customer ID', fontsize=12)
-st.pyplot(fig)
+col1, col2 = st.columns([2, 1])
 
-st.write("Pelanggan dengan ID 8d50f5eadf50201ccdcedfb9e2ac8455 adalah pelanggan terbanyak dengan 17 jumlah pemesanan. Rata-rata pembelian tiap pelanggan adalah 1.034063795052116")
-# Top Cities by Number of Unique Customers
-st.header('Top Cities by Number of Unique Customers')
+with col1:
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.barplot(
+        x='order_count',
+        y='customer_unique_id',
+        data=top_customers.sort_values(by="order_count", ascending=False),
+        palette='viridis',
+        ax=ax
+    )
+    ax.set_title('Top Customers by Order Count', fontsize=14)
+    ax.set_xlabel('Order Count')
+    ax.set_ylabel('Customer ID')
+    st.pyplot(fig)
 
-customer_city_counts = customers_df.groupby(by="customer_city").agg({
-    "customer_id": "nunique"  
-}).reset_index()
+with col2:
+    max_order = top_customers['order_count'].max()
+    top_customer_id = top_customers.loc[top_customers['order_count'].idxmax(), 'customer_unique_id']
+    avg_orders = round(top_customers['order_count'].mean(), 2)
 
-customer_city_counts.columns = ['customer_city', 'unique_customers']
-customer_city_counts = customer_city_counts.sort_values(by='unique_customers', ascending=False)
-top_5_cities = customer_city_counts.head(5)
+    st.info(f"""
+    **Top Customer ID:** `{top_customer_id}`  
+    **Number of Orders:** {max_order}  
+    **Average Orders per Customer:** {avg_orders}
+    """)
 
-st.write(top_5_cities)
+# --- Top Cities Section ---
+st.markdown("### Top Cities by Unique Customers")
 
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.barh(top_5_cities['customer_city'], top_5_cities['unique_customers'], color='#FF5733')
-ax.set_title('Top 5 Cities with Most Unique Customers', fontsize=16)
-ax.set_xlabel('Number of Unique Customers', fontsize=14)
-ax.set_ylabel('City', fontsize=14)
+# Aggregate city data
+city_counts = customers_df.groupby("customer_city")['customer_id'].nunique().reset_index()
+city_counts.columns = ['customer_city', 'unique_customers']
+top_cities = city_counts.sort_values(by='unique_customers', ascending=False).head(5)
 
-st.pyplot(fig)
+col3, col4 = st.columns([1, 2])
 
-st.write("Pelanggan terbanyak berasal dari Sao Paulo, yaitu sebanyak 15.540.")
+with col3:
+    st.dataframe(top_cities, use_container_width=True)
 
+    st.success(f"""
+    The city with the most unique customers is **{top_cities.iloc[0,0]}**
+    with **{top_cities.iloc[0,1]:,}** customers.
+    """)
+
+with col4:
+    fig2, ax2 = plt.subplots(figsize=(10, 6))
+    sns.barplot(
+        y='customer_city',
+        x='unique_customers',
+        data=top_cities,
+        palette='coolwarm',
+        ax=ax2
+    )
+    ax2.set_title('Top 5 Cities with Most Unique Customers', fontsize=14)
+    ax2.set_xlabel('Number of Unique Customers')
+    ax2.set_ylabel('City')
+    st.pyplot(fig2)
+
+# --- Footer ---
+st.markdown("---")
+st.caption("Made by Adityo Pangestu · Built with Streamlit")
