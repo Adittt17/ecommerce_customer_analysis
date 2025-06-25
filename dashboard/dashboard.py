@@ -30,6 +30,7 @@ ax.set_xlabel('Number of Orders', fontsize=12)
 ax.set_ylabel('Customer ID', fontsize=12)
 st.pyplot(fig)
 
+st.write("Pelanggan dengan ID 8d50f5eadf50201ccdcedfb9e2ac8455 adalah pelanggan terbanyak dengan 17 jumlah pemesanan. Rata-rata pembelian tiap pelanggan adalah 1.034063795052116")
 # Top Cities by Number of Unique Customers
 st.header('Top Cities by Number of Unique Customers')
 
@@ -51,4 +52,5 @@ ax.set_ylabel('City', fontsize=14)
 
 st.pyplot(fig)
 
-st.write("The chart of the top 5 cities has been displayed.")
+st.write("Pelanggan terbanyak berasal dari Sao Paulo, yaitu sebanyak 15.540.")
+
