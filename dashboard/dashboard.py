@@ -47,7 +47,6 @@ with col2:
     st.info(f"""
     **Top Customer ID:** `{top_customer_id}`  
     **Number of Orders:** {max_order}  
-    **Average Orders per Customer:** {avg_orders}
     """)
 
 # --- Top Cities Section ---
